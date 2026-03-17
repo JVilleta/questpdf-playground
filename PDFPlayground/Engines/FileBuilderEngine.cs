@@ -97,17 +97,17 @@ namespace PDFPlayground.Engines
                             {
                                 row.Spacing(30);
 
-                                var pLength = (int)Math.Ceiling((decimal)fieldsHeader!.Count / columns);
+                                var itemsPerColumn = (int)Math.Ceiling((decimal)fieldsHeader!.Count / columns);
 
-                                for (int i = 0; i < columns; i++)
+                                for (int columnIndex = 0; columnIndex < columns; columnIndex++)
                                 {
                                     row.RelativeItem().Column(col =>
                                     {
-                                        var startPosition = pLength * i;
+                                        var startPosition = itemsPerColumn * columnIndex;
 
-                                        for (int j = 0; j < pLength; j++)
+                                        for (int rowIndex = 0; rowIndex < itemsPerColumn; rowIndex++)
                                         {
-                                            var position = startPosition + j;
+                                            var position = startPosition + rowIndex;
 
                                             if (fieldsHeader.Count == position)
                                                 break;
