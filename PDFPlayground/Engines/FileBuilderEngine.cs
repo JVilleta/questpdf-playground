@@ -1,3 +1,4 @@
+using PDFPlayground.Contracts;
 using PDFPlayground.Dtos;
 using PDFPlayground.Extensions;
 using PDFPlayground.Styles;
@@ -7,7 +8,7 @@ using QuestPDF.Infrastructure;
 
 namespace PDFPlayground.Engines
 {
-    public class FileBuilderEngine
+    public class FileBuilderEngine : IFileBuilderEngine
     {
         private static string FormatValue(object? value)
         {
