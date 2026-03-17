@@ -93,44 +93,47 @@ namespace PDFPlayground.Engines
 
                             column.Item().CLineHorizontal(15);
 
-                            column.Item().Row(row =>
-                            {
-                                row.Spacing(30);
+                            if(fieldsHeader is not null){
 
-                                var itemsPerColumn = (int)Math.Ceiling((decimal)fieldsHeader!.Count / columns);
-
-                                for (int columnIndex = 0; columnIndex < columns; columnIndex++)
+                                column.Item().Row(row =>
                                 {
-                                    row.RelativeItem().Column(col =>
+                                    row.Spacing(30);
+
+                                    var itemsPerColumn = (int)Math.Ceiling((decimal)fieldsHeader.Count / columns);
+
+                                    for (int columnIndex = 0; columnIndex < columns; columnIndex++)
                                     {
-                                        var startPosition = itemsPerColumn * columnIndex;
-
-                                        for (int rowIndex = 0; rowIndex < itemsPerColumn; rowIndex++)
+                                        row.RelativeItem().Column(col =>
                                         {
-                                            var position = startPosition + rowIndex;
+                                            var startPosition = itemsPerColumn * columnIndex;
 
-                                            if (fieldsHeader.Count == position)
-                                                break;
-
-                                            var field = fieldsHeader[position];
-
-                                            var rawValue = field.ValueSelector(dataHeader);
-
-                                            var value = field.Formatter?.Invoke(rawValue) ?? FormatValue(rawValue) ?? "";
-
-                                            col.Item().Text(text =>
+                                            for (int rowIndex = 0; rowIndex < itemsPerColumn; rowIndex++)
                                             {
-                                                text.Span($"{field.Label}: ").Bold();
-                                                text.Span(value);
-                                            });
-                                            col.Item().CLineHorizontal();
-                                        }
-                                    });
-                                }
+                                                var position = startPosition + rowIndex;
 
-                                column.Item().PaddingTop(10).CLineHorizontal();
+                                                if (fieldsHeader.Count == position)
+                                                    break;
 
-                            });
+                                                var field = fieldsHeader[position];
+
+                                                var rawValue = field.ValueSelector(dataHeader);
+
+                                                var value = field.Formatter?.Invoke(rawValue) ?? FormatValue(rawValue) ?? "";
+
+                                                col.Item().Text(text =>
+                                                {
+                                                    text.Span($"{field.Label}: ").Bold();
+                                                    text.Span(value);
+                                                });
+                                                col.Item().CLineHorizontal();
+                                            }
+                                        });
+                                    }
+
+                                    column.Item().PaddingTop(10).CLineHorizontal();
+
+                                });
+                            }
                         });
                     }
                 });
